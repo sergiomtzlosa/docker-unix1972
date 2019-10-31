@@ -1,21 +1,21 @@
 FROM ubuntu:xenial
 
-RUN apt-get update  && \
-    apt-get install -y bash make musl-dev gcc unzip python2.7 rsync
+RUN apt-get update && \
+    apt-get install -y bash make musl-dev gcc unzip python python-dev rsync git 
 
 WORKDIR /
 
-COPY simhv39.zip unix.zip /
+COPY simhv39.zip /
 
-RUN mkdir -p simhv39
+RUN mkdir -p /simhv39 && cd /simhv39 && unzip ../simhv39.zip && cd / 
 
-RUN cd simhv39 && unzip ../simhv39.zip 
+RUN make -C simhv39 BIN/pdp11
 
-RUN unzip ../unix.zip
-
-RUN cd / && make -C simhv39 BIN/pdp11
+RUN git clone https://github.com/sergiomtzlosa/unix.git && cd unix && git fetch && git checkout bugfix/compile-on-new-systems
 
 RUN cp /simhv39/BIN/pdp11 /unix/tools
+
+RUN ln -sf /usr/bin/python /usr/bin/python2
 
 RUN make -C unix
 
