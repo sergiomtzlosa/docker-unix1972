@@ -17,3 +17,5 @@ docker run -it unix1972
 ```
 
 -  Username: root
+
+Type in root followed by . You should receive a # prompt
