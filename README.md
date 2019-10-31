@@ -15,3 +15,5 @@ Run the Docker image
 ```
 docker run -it unix1972
 ```
+
+-  Username: root
